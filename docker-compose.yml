@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  web-app:
+    build: .
+    container_name: bootstrap_latest_container
+    ports:
+      - "5173:5173" # เชื่อมพอร์ต 5173 บนเครื่องจริง เข้ากับพอร์ต 5173 ใน Container
+    volumes:
+      - .:/app # Bind Mount: แก้โค้ดในเครื่องจริง โค้ดใน Container เปลี่ยนทันที
+      - /app/node_modules # ป้องกันไม่ให้ node_modules ใน Container ถูกไฟล์เครื่องจริงทับ
+    environment:
+      - CHOKIDAR_USEPOLLING=true # ช่วยให้ Hot Reload ทำงานได้อย่างแม่นยำ
